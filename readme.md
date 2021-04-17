@@ -1,6 +1,6 @@
 # Trabalho ToDoAPP com Node.js.
 
-O desfio era criar uma API REST com Node.js para projeto de um ToDoAPP.
+O desafio do curso de back-end da Resilia educaçao é criar uma API REST com Node.js para projeto de um ToDoAPP.
 
 ### Requisitos minímos.
 
