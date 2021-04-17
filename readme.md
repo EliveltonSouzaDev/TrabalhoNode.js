@@ -4,10 +4,10 @@ O desafio do curso de back-end da Resilia educaçao é criar uma API REST com No
 
 ### Requisitos minímos.
 
-- [ ] Realizar as 4 funções básicas do CRUD (Create, Read, Update, Delete)
-- [ ] Utilizar o Sqlite3
-- [ ] Utilizar o Banco USUARIOS e TAREFAS
-- [ ] Aplicar o Padrão DAO (Data Access Object)
+- [x] Realizar as 4 funções básicas do CRUD (Create, Read, Update, Delete)
+- [x] Utilizar o Sqlite3
+- [x] Utilizar o Banco USUARIOS e TAREFAS
+- [x] Aplicar o Padrão DAO (Data Access Object)
 
 
 
