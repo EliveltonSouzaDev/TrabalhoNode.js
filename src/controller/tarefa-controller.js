@@ -4,50 +4,65 @@ const tarefaDao = require("../DAO/tarefa-dao.js");
 function tarefaController(app, bd) {
   const DAO = new tarefaDao(bd);
 
-  app.get("/tarefas", (req, res) => {
-    DAO.listaTarefas()
-      .then((tarefas) => res.send(tarefas))
-      .catch((err) => res.send(err));
+  app.get("/tarefas", async (req, res) => {
+    try {
+      let tarefaListada = DAO.listaTarefas();
+      res.status(200).send(tarefaListada);
+    } catch (e) {
+      res.status(500).send({ mensagem: "Falha ao listar tarefa" });
+    }
   });
 
-  app.get("/tarefas/:titulo", (req, res) => {
-    const titulo = req.params.titulo;
-    DAO.listaTituloPorTarefas(titulo)
-      .then((titulo) => res.send(titulo))
-      .catch((err) => res.send(`Erro: ${err} na consulta`));
+  app.get("/tarefas/:titulo", async(req, res) => {
+    try {
+      const titulo = req.params.titulo;
+      let tarefaListadaPorTitulo = await DAO.listaTituloPorTarefas(titulo);
+      res.status(200).send(tarefaListadaPorTitulo);
+    } catch (e) {
+      res.status(500).send({ mensagem: "Falha ao listar tarefa" });
+    }
   });
 
-  app.post("/tarefas", (req, res) => {
-    const tarefa = req.body;
+  app.post("/tarefas", async (req, res) => {
+    try {
+      const tarefa = req.body;
 
-    const tarefas = new tarefaModel(
-      0,
-      tarefa.TITULO,
-      tarefa.DESCRICAO,
-      tarefa.STATUS,
-      tarefa.DATACRIACAO,
-      tarefa.ID_USUARIO
-    );
-    DAO.insereTarefa(tarefas)
-      .then((tarefas) => res.send(tarefas))
-      .catch((err) => res.send(`${err}`));
+      const novaTarefa = new tarefaModel(
+        0,
+        tarefa.TITULO,
+        tarefa.DESCRICAO,
+        tarefa.STATUS,
+        tarefa.DATACRIACAO,
+        tarefa.ID_USUARIO
+      );
+
+      let novaTarefaCriada = DAO.insereTarefa(novaTarefa);
+      res.status(201).send(novaTarefaCriada);
+    } catch (e) {
+      res.status(400).send({ mensagem: "Falha ao criar tarefa" });
+    }
   });
 
-  app.delete("/tarefas/:titulo", (req, res) => {
+  app.delete("/tarefas/:titulo", async(req, res) => {
+   try{
     let titulo = req.params.titulo;
-    DAO.deletaTarefa(titulo)
-      .then((mensagemSucesso) => res.send({ mensagem: mensagemSucesso }))
-      .catch((mensagemFalha) => res.send({ mensagem: mensagemFalha }));
+    await DAO.deletaTarefa(titulo)
+    res.status(200).send({ mensagem: "tarefa deletada com sucesso" });
+  } catch (e) {
+    res.status(500).send({ mensagem: "Falha ao deletar tarefa" });
+  }
   });
 
-  app.put("/tarefas/:titulo", (req, res) => {
+  app.put("/tarefas/:titulo", async(req, res) => {
+    try{
     let titulo = req.params.titulo;
     const body = req.body;
-    console.log(body);
-    DAO.alteraTarefa(titulo, body)
-      .then((mensagemSucesso) => res.send({ mensagem: mensagemSucesso }))
-      .catch((mensagemFalha) => res.send({ mensagem: mensagemFalha }));
-  });
+    await DAO.alteraTarefa(titulo, body)
+    res.status(202).send({ mensagem: "tarefa alterada com sucesso" });
+  } catch (e) {
+    res.status(500).send({ mensagem: "Falha ao alterar tarefa" });
+  }
+});
 }
 
 module.exports = tarefaController;

@@ -4,44 +4,60 @@ const UsuarioDAO = require("../DAO/usuario-dao.js");
 function usuarioController(app, bd) {
   const DAO = new UsuarioDAO(bd);
 
-  app.get("/usuario", (req, res) => {
-    DAO.listaUsuarios()
-      .then((usuarios) => res.send(usuarios))
-      .catch((err) => res.send(`Erro: ${err} na consulta`));
+  app.get("/usuario", async (req, res) => {
+    try {
+      let usuarioListado = await DAO.listaUsuarios();
+      res.status(200).send(usuarioListado);
+    } catch (e) {
+      res.status(500).send({ mensagem: "Falha ao listar usuarios" });
+    }
   });
 
-  
-  app.get("/usuario/:email", (req, res) => {
-    let email = req.params.email;
-    DAO.listaUsuarioPorEmail(email)
-      .then((usuarios) => res.send(usuarios))
-      .catch((err) => res.send(`Erro: ${err} na consulta`));
+  app.get("/usuario/:email", async (req, res) => {
+    try {
+      let email = req.params.email;
+      let usuarioListadoPorEmail = await DAO.listaUsuarioPorEmail(email);
+      res.status(200).send(usuarioListadoPorEmail);
+    } catch (e) {
+      res.status(500).send({ mensagem: "Falha ao listar usuario" });
+    }
   });
 
-  app.post("/usuario", (req, res) => {
-    const body = req.body;
-    console.log(body);
-
-    const usuarios = new UsuarioModel(0, body.NOME, body.EMAIL, body.SENHA);
-    DAO.insereUsuarios(usuarios)
-      .then((usuarios) => res.send(usuarios))
-      .catch((err) => res.send(`${err}`));
+  app.post("/usuario", async (req, res) => {
+    try {
+      const body = req.body;
+      const novoUsuario = new UsuarioModel(
+        0,
+        body.NOME,
+        body.EMAIL,
+        body.SENHA
+      );
+      let novoUsuarioCriado = await DAO.insereUsuarios(novoUsuario);
+      res.status(201).send(novoUsuarioCriado);
+    } catch (e) {
+      res.status(500).send({ mensagem: "Falha ao criar novo usuario" });
+    }
   });
 
-  app.delete("/usuario/:id", (req, res) => {
-    let email = req.params.id;
-    DAO.deletaUsuario(email)
-    .then((mensagemSucesso) => res.send({mensagem: mensagemSucesso}))
-    .catch((mensagemFalha) => res.send({mensagem: mensagemFalha}));
+  app.delete("/usuario/:email", async (req, res) => {
+    try {
+      let email = req.params.email;
+      await DAO.deletaUsuario(email);
+      res.status(200).send({ mensagem: "Usuario deletado com sucesso" });
+    } catch (e) {
+      res.status(500).send({ mensagem: "Falha ao deletar usuario" });
+    }
   });
 
-  app.put("/usuario/:email", (req, res) => {
-    let email = req.params.email;
-    const body = req.body;
-    console.log(body);
-    DAO.alteraUsuario(email,body)
-    .then((mensagemSucesso) => res.send({mensagem: mensagemSucesso}))
-    .catch((mensagemFalha) => res.send({mensagem: mensagemFalha}));
+  app.put("/usuario/:email", async (req, res) => {
+    try {
+      let email = req.params.email;
+      const body = req.body;
+      await DAO.alteraUsuario(email, body);
+      res.status(202).send({ mensagem: "Usuario alterado com sucesso" });
+    } catch (e) {
+      res.status(500).send({ mensagem: "Falha ao alterar usuario" });
+    }
   });
 }
 

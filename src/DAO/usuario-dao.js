@@ -51,7 +51,7 @@ module.exports = class UsuariosDAO {
   deletaUsuario(usuario) {
     return new Promise((res, rej) => {
       this.bd.run(
-        "DELETE FROM USUARIOS WHERE ID = (?)",
+        "DELETE FROM USUARIOS WHERE EMAIL = (?)",
         [usuario],
         (err) => {
           if (err) {
