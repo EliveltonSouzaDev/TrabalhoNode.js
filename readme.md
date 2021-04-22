@@ -17,6 +17,11 @@ O desafio do curso de back-end da Resilia educaçao é criar uma API REST com No
 
 A aplicação pode ser acessada em `<localhost:3000>`
 
+Rotas :
+
+`<localhost:3000/usuarios>`
+`<localhost:3000/tarefas>`
+
 
 ### 🛠 Tecnologias
 
