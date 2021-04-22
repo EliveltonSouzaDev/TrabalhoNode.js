@@ -4,16 +4,17 @@ const UsuarioDAO = require("../DAO/usuario-dao.js");
 function usuarioController(app, bd) {
   const DAO = new UsuarioDAO(bd);
 
-  app.get("/usuario", async (req, res) => {
+  app.get("/usuarios", async (req, res) => {
     try {
       let usuarioListado = await DAO.listaUsuarios();
+      console.log(usuarioListado);
       res.status(200).send(usuarioListado);
     } catch (e) {
-      res.status(500).send({ mensagem: "Falha ao listar usuarios" });
+      res.status(503).send({ mensagem: "Falha ao listar usuarios" });
     }
   });
 
-  app.get("/usuario/:email", async (req, res) => {
+  app.get("/usuarios/:email", async (req, res) => {
     try {
       let email = req.params.email;
       let usuarioListadoPorEmail = await DAO.listaUsuarioPorEmail(email);
@@ -23,7 +24,7 @@ function usuarioController(app, bd) {
     }
   });
 
-  app.post("/usuario", async (req, res) => {
+  app.post("/usuarios", async (req, res) => {
     try {
       const body = req.body;
       const novoUsuario = new UsuarioModel(
@@ -39,7 +40,7 @@ function usuarioController(app, bd) {
     }
   });
 
-  app.delete("/usuario/:email", async (req, res) => {
+  app.delete("/usuarios/:email", async (req, res) => {
     try {
       let email = req.params.email;
       await DAO.deletaUsuario(email);
@@ -49,7 +50,7 @@ function usuarioController(app, bd) {
     }
   });
 
-  app.put("/usuario/:email", async (req, res) => {
+  app.put("/usuarios/:email", async (req, res) => {
     try {
       let email = req.params.email;
       const body = req.body;

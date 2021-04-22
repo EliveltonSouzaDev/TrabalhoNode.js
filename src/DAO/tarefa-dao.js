@@ -5,11 +5,11 @@ module.exports = class TarefaDao {
 
   listaTarefas() {
     return new Promise((res, rej) => {
-      this.bd.all("SELECT * FROM TAREFAS", (err, tarefa) => {
+      this.bd.all("SELECT * FROM TAREFAS", (err, tarefas) => {
         if (err) {
           rej(err);
         } else {
-          res(tarefa);
+          res(tarefas);
         }
       });
     });
@@ -46,7 +46,7 @@ module.exports = class TarefaDao {
           if (err) {
             rej("Falha ao inserir tarefa");
           } else {
-            res("Dever inserida com sucesso");
+            res("Tarefa inserida com sucesso");
           }
         }
       );
@@ -68,7 +68,7 @@ module.exports = class TarefaDao {
   alteraTarefa(titulo, body) {
     return new Promise((res, rej) => {
       this.bd.run(
-        "UPDATE TAREFAS SET STATUS = (?), DESCRICAO = (?), WHERE TITULO = (?)",
+        "UPDATE TAREFAS SET STATUS = (?), DESCRICAO = (?) WHERE TITULO = (?)",
         [body.STATUS, body.DESCRICAO, titulo],
         (err) => {
           if (err) {

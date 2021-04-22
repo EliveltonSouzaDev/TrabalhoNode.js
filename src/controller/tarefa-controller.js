@@ -6,7 +6,8 @@ function tarefaController(app, bd) {
 
   app.get("/tarefas", async (req, res) => {
     try {
-      let tarefaListada = DAO.listaTarefas();
+      let tarefaListada = await DAO.listaTarefas();
+      console.log(tarefaListada);
       res.status(200).send(tarefaListada);
     } catch (e) {
       res.status(500).send({ mensagem: "Falha ao listar tarefa" });
@@ -36,7 +37,7 @@ function tarefaController(app, bd) {
         tarefa.ID_USUARIO
       );
 
-      let novaTarefaCriada = DAO.insereTarefa(novaTarefa);
+      let novaTarefaCriada = await DAO.insereTarefa(novaTarefa);
       res.status(201).send(novaTarefaCriada);
     } catch (e) {
       res.status(400).send({ mensagem: "Falha ao criar tarefa" });

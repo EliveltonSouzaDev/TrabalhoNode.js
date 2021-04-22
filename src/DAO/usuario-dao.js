@@ -5,7 +5,7 @@ module.exports = class UsuariosDAO {
 
   listaUsuarios() {
     return new Promise((res, rej) => {
-      this.bd.all("SELECT * FROM USUARIOS", (err, usuarios) => {
+      this.bd.all("SELECT * FROM TAREFAS", (err, usuarios) => {
         if (err) {
           rej(err);
         } else {
@@ -77,8 +77,8 @@ module.exports = class UsuariosDAO {
             res("Usuário alterado com sucesso");
           }
         }
-      );
-    });
+      )
+    })
   }
 
   

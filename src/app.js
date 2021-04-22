@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const consign = require('consign'); // consign é para agrupar todas os encapsulamentos.
 const cors = require('cors');
 const bd = require('./infra/sqlite-db.js');
 const usuarioController = require ('./controller/usuario-controller.js');
