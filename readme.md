@@ -11,16 +11,16 @@ O desafio do curso de back-end da Resilia educaçao é criar uma API REST com No
 
 ### 🚀 Como executar
 
-* Clone o reposiório `< git clone https://github.com/EliveltonSouzaDev/TrabalhoNode.js>`
-* Instale as dependências com `<npm install>`
-* Inicie o servidor com `<npm start>`
+* Clone o reposiório ` git clone https://github.com/EliveltonSouzaDev/TrabalhoNode.js`
+* Instale as dependências com `npm install`
+* Inicie o servidor com `npm start`
 
-A aplicação pode ser acessada em `<localhost:3000>`
+A aplicação pode ser acessada em `localhost:3000`
 
 Rotas :
 
-`<localhost:3000/usuarios>`
-`<localhost:3000/tarefas>`
+`localhost:3000/usuarios`
+`localhost:3000/tarefas`
 
 
 ### 🛠 Tecnologias
